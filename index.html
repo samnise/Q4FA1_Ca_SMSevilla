@@ -11,24 +11,97 @@
     <form id="login">
         <fieldset form="login">
             <legend>Log-In: </legend>
-            
-            <!--name--><label for="name">Name:</label>
-            <input type="name" id="Name" name="Name"><br><br>
-            <!--username--><label for="userName">Username:</label>
-            <input type="text" id="userName" name="userName"><br><br>
-            <!--password--><label for="pword">Password:</label>
-            <input type="password" id="pword" name="pword"><br><br>
-            <!--email--><label for="email">Email:</label>
-            <input type="email" id="email" name="email"><br><br>
-            <!--address--><label for="address">Address:</label>
-            <input type="address" id="address" name="address"><br><br>
-            <!--profile bio--><label for="bio">Profile Bio (About Me):</label><br>
-            <textarea id="tArea" name="bio" rows="5" cols="50"></textarea><br><br>
-
-            <input type="submit" value="Submit">
-            <input type="reset" value="Clear">
+            <div class="input-box">
+                <div class="input">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" id="Name" name="Name" placeholder="Name" required onblur="validateInput(this)" onfocus="removeValidation(this)">
+                </div>
+            </div>
+            <div class="input-box">
+                <div class="input">
+                    <i class='bx bxs-user'></i>
+                        <input type="text" id="userName" name="Username" placeholder="Username" required onblur="validateInput(this)" onfocus="removeValidation(this)">
+                </div>
+            </div>
+            <div class="input-box">
+                <div class="input">
+                    <i class='bx bx1-gmail'></i>
+                    <input type="email" id="email" name="Email" placeholder="Email" required onblur="validateInput(this)" onfocus="removeValidation(this)">
+                </div>
+            </div>
+            <div class="input-box">
+                <div class="input">
+                    <i class='bx bxs-lock-alt'></i>
+                    <input type="password" id="pword" name="Password" placeholder="Password" required onblur="validateInput(this)" onfocus="removeValidation(this)"><br>
+                    <label><input type="checkbox" name="checkbox" onclick="checkboxChanged()">Show password</label><br>
+                </div>
+            </div>
+            <div class="input-box">
+                <div class="input">
+                    <i class='bx bx-male-female'></i>
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required onblur="validateInput(this)" onfocus="removeValidation(this)">
+                        <option value="" selected disabled hidden>Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-box">
+                <div class="input">
+                    <label for="aboutme">About Me:</label><br>
+                    <textarea id="aboutme" name="aboutme" required onblur="validateInput(this)" onfocus="removeValidation(this)"></textarea>
+                </div>
+            </div>
+            <div class="buttons">
+                <button type="submit" value="Submit">Submit</button>
+                <button type="reset" value="Reset" onclick="clearOutput()">Reset</button>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Information</legend>
+            <div id="output"></div>
         </fieldset>
     </form>
     </div>
+
+<script>
+    function checkboxChanged(){
+            showPass();
+        }
+		function showPass() {
+			var passwordInput = document.getElementById("password");
+			if (passwordInput.type === "password") {
+				passwordInput.type = "text";
+			} else {
+				passwordInput.type = "password";
+			}
+		}
+		function validateInput(input) {
+			if (input.value == "") {
+				input.style.border = "2px solid #e0353a";
+			}
+		}
+		function removeValidation(input) {
+			input.style.border = "2px solid #3c6a36";
+		}
+		document.getElementById("login").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var output = document.getElementById("output");
+        output.innerHTML = "";
+        var inputs = document.querySelectorAll("input, select, textarea");
+        for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].name!= "checkbox") {
+            output.innerHTML += inputs[i].name + ": " + inputs[i].value + "<br>";
+        }
+        }
+        });
+		function clearOutput() {
+			var output = document.getElementById("output");
+			output.innerHTML = "";
+		}
+	</script>
+</script>
 </body>
 </html>
